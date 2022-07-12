@@ -22,7 +22,7 @@ pipeline {
 	  stage ('docker build and push image'){
 	       steps{
 		     script {
-			  withCredentials([usernamePassword(credentialsId: 'myregistry-login', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+			  withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
 			   bat '''
 			     docker version
 				 docker build -t helloworldservice/${BUILD_NUMBER} service1/.
