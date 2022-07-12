@@ -22,9 +22,16 @@ pipeline {
 	  stage ('docker build and push image'){
 	       steps{
 		     script {
+			  withCredentials([usernamePassword(credentialsId: 'myregistry-login', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
 			   bat '''
 			     docker version
+				 docker build -t helloworldservice/${BUILD_NUMBER} service1/.
+				 docker build -t welcomeservice/${BUILD_NUMBER} service2/.
+				 docker login --username=${USERNAME} --password=${PASSWORD}
+				 docker push helloworldservice/${BUILD_NUMBER}
+				 docker push welcomeservice/${BUILD_NUMBER}
 			   '''
+			 }
 			 }
 		   }
 	  }
