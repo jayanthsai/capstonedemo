@@ -1,0 +1,1 @@
+ C:\softwares\sonar-scanner-cli-4.7.0.2747-windows\sonar-scanner-4.7.0.2747-windows\bin\sonar-scanner  -D"sonar.projectKey=capstone" -D"sonar.projectName=capstone" -D"sonar.projectVersion=1.0" -D"sonar.sources=service1/,service2/" -D"sonar.language=py" -D"sonar.host.url=http://localhost:9000/" -D"sonar.login=admin" -D"sonar.password=admin123" 
