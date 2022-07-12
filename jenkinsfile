@@ -1,0 +1,12 @@
+pipeline {
+   agent any
+   stages{
+      stage('git clone'){
+	      steps {
+		      git branch: 'master',
+                credentialsId: '03daf977-4845-423e-9fb7-940c7dd52c03',
+                url: 'https://github.com/jayanthsai/capstonedemo.git'
+		  }
+	  }
+   }
+}
