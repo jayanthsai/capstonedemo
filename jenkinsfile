@@ -18,5 +18,15 @@ pipeline {
 			  }
 		  }
 	  }
+	  
+	  stage ('docker build and push image'){
+	       steps{
+		     script {
+			   bat '''
+			     docker version
+			   '''
+			 }
+		   }
+	  }
    }
 }
