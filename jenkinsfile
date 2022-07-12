@@ -23,14 +23,7 @@ pipeline {
 	       steps{
 		     script {
 			  withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'Password', usernameVariable: 'Username')]) {
-			   bat '''
-			     docker version
-				 docker build -t helloworldservice/$BUILD_NUMBER service1/.
-				 docker build -t welcomeservice/$BUILD_NUMBER service2/.
-				 docker login -u $Username -p $Password
-				 docker push helloworldservice/$BUILD_NUMBER
-				 docker push welcomeservice/$BUILD_NUMBER
-			   '''
+			   bat "docker version;docker build -t helloworldservice/$BUILD_NUMBER service1/.;docker build -t welcomeservice/$BUILD_NUMBER service2/.;docker login -u $Username -p $Password;docker push helloworldservice/$BUILD_NUMBER;docker push welcomeservice/$BUILD_NUMBER"
 			 }
 			 }
 		   }
