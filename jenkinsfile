@@ -25,8 +25,8 @@ pipeline {
 			  withDockerRegistry(credentialsId: 'docker',  url: "") {
 			  bat '''
                           cd service1
-                          docker build -t helloworld/service1:%BUILD_NUMBER% .  
-                          docker push helloworld/service1:%BUILD_NUMBER%
+                          docker build -t integratordevops/helloservice1:%BUILD_NUMBER% .  
+                          docker push integratordevops/helloservice1:%BUILD_NUMBER%
                           '''
 			 }
 			 }
@@ -39,8 +39,8 @@ pipeline {
 			  
 			  bat '''
                           cd service2
-                          docker build -t welcomeservice/service2:%BUILD_NUMBER% .  
-                          docker push welcomeservice/service2:%BUILD_NUMBER%
+                          docker build -t integratordevops/welcomeservice2:%BUILD_NUMBER% .  
+                          docker push integratordevops/welcomeservice2:%BUILD_NUMBER%
                           '''
 			 
 			 }
@@ -50,8 +50,8 @@ pipeline {
         steps{
             script{
                 bat '''
-                    docker rmi helloworld/service1:%BUILD_NUMBER%  
-                    docker rmi welcomeservice/service2:%BUILD_NUMBER%
+                    docker rmi integratordevops/helloservice1:%BUILD_NUMBER%  
+                    docker rmi integratordevops/welcomeservice2:%BUILD_NUMBER%
                     '''  
                 }  
             }
