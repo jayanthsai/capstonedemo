@@ -22,7 +22,7 @@ pipeline {
 	  stage ('docker build image service1'){
 	       steps{
 		     script {
-			  withDockerRegistry(credentialsId: 'docker', toolName: 'docker', url: "") {
+			  withDockerRegistry(credentialsId: 'docker',  url: "") {
 			  bat '''
                           cd service1
                           docker build -t helloworld/service1:%BUILD_NUMBER% .  
