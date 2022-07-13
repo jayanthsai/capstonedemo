@@ -19,14 +19,42 @@ pipeline {
 		  }
 	  }
 	  
-	  stage ('docker build and push image'){
+	  stage ('docker build image service1'){
 	       steps{
 		     script {
-			  withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'Password', usernameVariable: 'Username')]) {
-			   bat 'docker version;docker build -t helloworldservice/$BUILD_NUMBER service1/.;docker build -t welcomeservice/$BUILD_NUMBER service2/.;docker login -u $Username -p $Password;docker push helloworldservice/$BUILD_NUMBER;docker push welcomeservice/$BUILD_NUMBER'
+			  withDockerRegistry(credentialsId: 'docker', toolName: 'docker', url: "") {
+			  bat '''
+                          cd service1
+                          docker build -t helloworld/service1:%BUILD_NUMBER% .  
+                          docker push helloworld/service1:%BUILD_NUMBER%
+                          '''
 			 }
 			 }
 		   }
 	  }
+
+          stage ('docker build image service2'){
+	       steps{
+		     script {
+			  
+			  bat '''
+                          cd service2
+                          docker build -t welcomeservice/service2:%BUILD_NUMBER% .  
+                          docker push welcomeservice/service2:%BUILD_NUMBER%
+                          '''
+			 
+			 }
+		   }
+	  }
+        stage ('docker remove image') {
+        steps{
+            script{
+                bat '''
+                    docker rmi helloworld/service1:%BUILD_NUMBER%  
+                    docker rmi welcomeservice/service2:%BUILD_NUMBER%
+                    '''  
+                }  
+            }
+}
    }
 }
