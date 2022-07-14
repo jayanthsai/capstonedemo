@@ -46,7 +46,50 @@ pipeline {
 			 }
 		   }
 	  }
-        stage ('docker remove image') {
+        
+stage('login to gcloud'){
+        steps{
+            script{
+			    
+				withEnv(['GCLOUD_HOME=C:\\Users\\vveeravenkatasury\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin']) {
+				withCredentials([file(credentialsId: 'capstoneprojectkey', variable: 'GC_KEY')]) {
+				bat '''
+                gcloud auth activate-service-account --key-file=%GC_KEY%
+				
+				'''
+                }
+               } 
+			}	
+        }
+    } 
+      stage('connect to GKE cluster'){
+        steps{
+            script{
+			    
+				withEnv(['GCLOUD_HOME=C:\\Users\\vveeravenkatasury\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin']) {
+				bat '''
+                
+                gcloud container clusters get-credentials kubecluster --zone us-central1-c --project capstone-355709
+				
+				'''
+               } 
+			}	
+        }
+    } 	
+      stage('deploy to GKE cluster'){
+        steps{
+            script{
+				bat '''
+                
+				kubectl apply -f ./kubernetes
+				kubectl set image deployments/service1-deployment helloworld=integratordevops/helloservice1:%BUILD_NUMBER% -n helloworld
+				kubectl set image deployments/service2-deployment welcome=integratordevops/welcomeservice2:%BUILD_NUMBER% -n welcome
+				
+				''' 
+			}	
+        }
+    }
+stage ('docker remove image') {
         steps{
             script{
                 bat '''
@@ -55,6 +98,6 @@ pipeline {
                     '''  
                 }  
             }
-}
+}	
    }
 }
