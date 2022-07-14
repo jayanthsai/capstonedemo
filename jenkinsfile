@@ -84,7 +84,6 @@ stage('login to gcloud'){
 				kubectl apply -f ./kubernetes
 				kubectl set image deployments/service1-deployment helloworld=integratordevops/helloservice1:%BUILD_NUMBER% -n helloworld
 				kubectl set image deployments/service2-deployment welcome=integratordevops/welcomeservice2:%BUILD_NUMBER% -n welcome
-				
 				''' 
 			}	
         }
