@@ -12,5 +12,4 @@ RUN apk add --update \
   && rm -rf /var/cache/apk/*
 
 COPY ./app /app
-
 CMD python app.py
